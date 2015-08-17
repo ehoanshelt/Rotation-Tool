@@ -1,0 +1,27 @@
+<div class"add-rotation" ng-show="rotationFormCtrl.showRotationForm('add-new-rotation')">
+  <div class="panel panel-default">
+    <div class="panel-heading">Add Rotation</div>
+    <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <input type="text" class="form-control" id="supportName" placeholder="Name of Support Rep..." ng-model="rotationData.support_agent" required>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-4">
+                 <input type="date" class="form-control" id="startDate" placeholder="Start Date" ng-model="rotationData.start_date" placeholder="Start Date" required>
+              </div>
+
+              <div class="col-sm-4">
+                 <input type="date" class="form-control" id="endDate" placeholder="End Date" ng-model="rotationData.end_date" placeholder="End Date" required>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-danger pull-right" style="margin-left:5px;" ng-click="rotationFormCtrl.resetForms()">Close</button><!--; createRotation(); rotationFormCtrl.resetForms()-->
+          <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="createRotation(); rotationFormCtrl.setRotationForm('view-all-rotation')" ng-hide="employee.name.length > 0">Add</button>
+
+        </form>
+    </div>
+    </div>
+  </div>
+</div>
