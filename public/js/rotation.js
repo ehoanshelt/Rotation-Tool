@@ -5,7 +5,7 @@ var app = angular.module("rotationApp", ["teamApp"]);
 
 app.controller("RotationController", ["$scope", "$http", function ($scope, $http) {
       var d = new Date("08/18/2015");
-      $scope.dayOfWeek = d.getDay();
+      $scope.dayOfWeek = d.getDay('08/18/2015');
 
       $http.get("/api/rotations")
           .success(function(data) {
@@ -80,7 +80,7 @@ app.controller("RotationController", ["$scope", "$http", function ($scope, $http
           for(var i = 0; i < $scope.teamData.length; i++){
             $scope.teamData[i].day = i + 1;
             $scope.rotationData.day_schedule.push($scope.teamData[i]._id);
-          } 
+          }
         }
 }]);
 
