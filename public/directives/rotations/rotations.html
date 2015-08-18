@@ -17,7 +17,7 @@
         <tr ng-repeat="rotation in rotations">
           <td>{{rotation.start_date | date:"shortDate"}} - {{rotation.end_date | date:"shortDate"}}</td>
           <td>{{rotation.support_agent}}</td>
-          <td>Not Started</td>
+          <td>{{rotation.status}}</td>
           <td>
               <button class="btn btn-xs"><span class="glyphicon glyphicon-eye-open" style="font-size:10px;" aria-hidden="true"></span></button>
               <button class="btn btn-success btn-xs" ng-click="rotationFormCtrl.setRotationForm('edit-rotation'); getRotation(rotation._id);"><span class="glyphicon glyphicon-edit" style="font-size:10px;" aria-hidden="true"></span></button>
