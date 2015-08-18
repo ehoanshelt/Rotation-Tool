@@ -39,6 +39,18 @@ app.controller("RotationController", ["$scope", "$http", function ($scope, $http
               });
       };
 
+      $scope.updateRotation = function(id) {
+          $http.put("/api/rotations/" + id, $scope.singleRotation[0])
+              .success(function(data) {
+                  $scope.singleRotation = {};
+                  $scope.rotations = data;
+                  console.log(data);
+              })
+              .error(function(data) {
+                  console.log('Error: ' + data);
+              });
+      };
+
       // delete a todo after checking it
       $scope.deleteRotation = function(id) {
           $http.delete("/api/rotations/" + id)

@@ -1,4 +1,3 @@
-{{singleRotation}}
 <div class"add-rotation" ng-show="rotationFormCtrl.showRotationForm('edit-rotation')">
   <div class="panel panel-default">
     <div class="panel-heading">Edit Rotation</div>
@@ -17,17 +16,13 @@
                  <input type="date" class="form-control" id="endDate" placeholder="End Date" ng-model="singleRotation[0].end_date" placeholder="End Date" required>
               </div>
             </div>
-            <div class="form-group">
-              <label>Q-Team Need</label>
-              <textarea type="text" class="form-control" id="Q-TeamNeed" ng-model="singleRotation[0].day_schedule[0].need" required></textarea>
-            </div>
-            <div class="form-group">
-              <label>SMB Aquistions</label>
-              <textarea type="text" class="form-control" id="smbAquistions" ng-model="singleRotation[0].day_schedule[1].need" required></textarea>
+            <div class="form-group" ng-repeat="team in teamData">
+              <label>{{team.name}} Needs</label>
+              <textarea type="text" class="form-control" id="Q-TeamNeed" ng-model="singleRotation[0].day_schedule[$index].need" required></textarea>
             </div>
           </div>
           <button type="submit" class="btn btn-danger pull-right" style="margin-left:5px;" ng-click="rotationFormCtrl.resetForms()">Close</button><!--; createRotation(); rotationFormCtrl.resetForms()-->
-          <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="rotationFormCtrl.setRotationForm('view-all-rotation')" ng-hide="employee.name.length > 0">Add</button>
+          <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="updateRotation(singleRotation[0]._id); rotationFormCtrl.setRotationForm('view-all-rotation')" ng-hide="employee.name.length > 0">Save</button>
 
         </form>
     </div>
