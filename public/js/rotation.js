@@ -4,8 +4,8 @@
 var app = angular.module("rotationApp", ["teamApp"]);
 
 app.controller("RotationController", ["$scope", "$http", function ($scope, $http) {
-      var d = new Date("08/18/2015");
-      $scope.dayOfWeek = d.getDay('08/18/2015');
+      var d = new Date();
+      $scope.dayOfWeek = d.getDay();
 
       $http.get("/api/rotations")
           .success(function(data) {
@@ -115,6 +115,13 @@ app.directive("rotationAdd", function(){
     return{
       restrict: "E",
       templateUrl: "directives/rotations/rotation-add.html",
+    };
+});
+
+app.directive("rotationEdit", function(){
+    return{
+      restrict: "E",
+      templateUrl: "directives/rotations/rotation-edit.html",
     };
 });
 
