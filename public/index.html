@@ -1,0 +1,64 @@
+<!-- index.html -->
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="rotationApp">
+  <head>
+<!-- META -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+<!-- Optimize mobile viewport -->
+
+    <title>Current Rotation</title>
+
+<!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!-- load jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+<!-- load angular -->
+    <script src="js/rotation.js"></script>
+    <script src="js/team.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- load bootstrap -->
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+  <body ng-controller="RotationController as rotationCtrl">
+    <div class="container">
+
+<!-- HEADER AND TODO COUNT -->
+      <div class="jumbotron text-center">
+        <h1>{{teamData[dayOfWeek - 1].name}}</h1>
+      </div>
+
+      <div class="activeRotation" ng-controller="ActiveRotation as activeCtrl">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">Team Needs</div>
+              <div class="panel-body">{{singleRotation[0].day_schedule[dayOfWeek - 1].need}}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">Team Members</div>
+              <ul class="list-group">
+                <li class="list-group-item" ng-repeat="employee in teamData[dayOfWeek - 1].employees">{{employee.name}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">Notes for the day</div>
+            <div class="panel-body">
+              <textarea class="form-control" ng-model="singleRotation[0].notes[dayOfWeek - 1].content" rows="10"></textarea>
+              <button class="btn btn-primary pull-right" style="margin-top:10px">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </body>
+  </html>

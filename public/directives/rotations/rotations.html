@@ -1,11 +1,13 @@
 <div class="rotations">
   <div class="panel panel-default">
-      <div class="panel-heading">Rotations
-          <button class="btn btn-primary btn-xs pull-right" ng-click="rotationFormCtrl.setRotationForm('add-new-rotation')">Add Rotation <span class="glyphicon glyphicon-plus" style="font-size:10px;" aria-hidden="true"></span></button>
-      </div>
-      <!--No Rotations Found-->
-      <div class="panel-body" ng-show="rotations.length == 0">
-          <p>No rotations found! Go ahead and create one!
+    <div class="panel-heading">Rotations
+      <button class="btn btn-primary btn-xs pull-right" ng-click="rotationFormCtrl.setRotationForm('add-new-rotation')">Add Rotation
+        <span aria-hidden="true" class="glyphicon glyphicon-plus" style="font-size:10px;"></span>
+      </button>
+    </div>
+<!--No Rotations Found-->
+    <div class="panel-body" ng-show="rotations.length == 0">
+      <p>No rotations found! Go ahead and create one!
       </div>
       <table class="table table-hover table-condensed" ng-show="rotations.length > 0">
         <tr>
@@ -15,23 +17,27 @@
           <th>Actions</th>
         </tr>
         <tr ng-repeat="rotation in rotations">
-          <td>{{rotation.start_date | date:"shortDate"}} - {{rotation.end_date | date:"shortDate"}}</td>
+          <td>{{rotation.start_date | date:"shortDate"}}
+            -
+            {{rotation.end_date | date:"shortDate"}}</td>
           <td>{{rotation.support_agent}}</td>
           <td>{{rotation.status}}</td>
           <td>
-              <button class="btn btn-xs"><span class="glyphicon glyphicon-eye-open" style="font-size:10px;" aria-hidden="true"></span></button>
-              <button class="btn btn-success btn-xs" ng-click="rotationFormCtrl.setRotationForm('edit-rotation'); getRotation(rotation._id);"><span class="glyphicon glyphicon-edit" style="font-size:10px;" aria-hidden="true"></span></button>
-              <button class="btn btn-danger btn-xs" ng-click="deleteRotation(rotation._id)"><span class="glyphicon glyphicon-remove" style="font-size:10px;" aria-hidden="true"></span></button>
+            <button class="btn btn-xs">
+              <span aria-hidden="true" class="glyphicon glyphicon-eye-open" style="font-size:10px;"></span>
+            </button>
+            <button class="btn btn-success btn-xs" ng-click="rotationFormCtrl.setRotationForm('edit-rotation'); getRotation(rotation._id);">
+              <span aria-hidden="true" class="glyphicon glyphicon-edit" style="font-size:10px;"></span>
+            </button>
+            <button class="btn btn-danger btn-xs" ng-click="deleteRotation(rotation._id)">
+              <span aria-hidden="true" class="glyphicon glyphicon-remove" style="font-size:10px;"></span>
+            </button>
           </td>
         </tr>
       </table>
+    </div>
+
+    <rotation-add></rotation-add>
+    <rotation-edit></rotation-edit>
+
   </div>
-
-          <rotation-add></rotation-add>
-          <rotation-edit></rotation-edit>
-
-          <ul>
-              <li ng-repeat="employee in teamData[dayOfWeek - 1].employees">{{employee.name}}</li>
-          </ul>
-
-</div>

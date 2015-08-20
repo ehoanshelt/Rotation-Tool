@@ -15,6 +15,13 @@
               <div class="col-sm-4">
                  <input type="date" class="form-control" id="endDate" placeholder="End Date" ng-model="singleRotation[0].end_date" placeholder="End Date" required>
               </div>
+              <div class="col-sm-4">
+                 <select class="form-control" ng-model="singleRotation[0].status" required>
+                    <option value="Not Started">Not Started</option>
+                    <option value="Active">Active</option>
+                    <option value="Completed">Completed</option>
+                 </select>
+              </div>
             </div>
             <div class="form-group" ng-repeat="team in teamData">
               <label>{{team.name}} Needs</label>

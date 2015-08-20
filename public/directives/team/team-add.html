@@ -1,37 +1,50 @@
 <!-- FORM TO CREATE team -->
-<div id="add-team-form" class="col-sm-6 pull-right" ng-show="teamFormCtrl.showTeamForm('add')">
-<div class="panel panel-default">
-    <div class="panel-heading">Team Details</div>
-    <div class="panel-body">
-      <form name="add-team">
-        <div class="form-group">
-                <input type="text" name="teamName" class="form-control" placeholder="Team Name" ng-model="formData.name" required>
-        </div>
-        <div class="row" ng-show="formData.name.length >= 1">
-            <div class="col-lg-12">
-              <div class="input-group">
-                <input type="text" name="teamEmployee" placeholder="Employee Name" class="form-control" ng-model="employee.name">
-                <span class="input-group-btn">
-                  <button type="submit" class="btn btn-success pull-right" ng-click="addEmployee(formData)">Add</button>
-                </span>
-              </div><!-- /input-group -->
-              <div style="margin-top:10px;">
-                  <div class="alert alert-success" ng-show="formData.employees != 0">Successfully Added: <span>{{formData.employees[formData.employees.length - 1].name}} </span>
-                  </div>
-              </div>
-              <div class="panel panel-default" ng-show="formData.employees.length != 0">
-                  <div class="panel-heading">Employees</div>
-                  <div class="panel-body">You can edit your employees after you save the team</div>
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="employee in formData.employees">{{employee.name}}</li>
-                    </ul>
-              </div><!-- End .panel-->
-            </div><!-- /.col-lg-6 -->
-        </div><!--End .row-->
-
-                <!-- creatTeam() WILL CREATE NEW team -->
-                <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="createTeam(); teamCtrl.resetForms()" ng-hide="employee.name.length > 0">Add Team</button>
-        </form>
-      </div>
+<md-bottom-sheet>
+  <md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+      <h2>Add Team</h2>
     </div>
-</div><!--add-team-form-->
+  </md-toolbar>
+  <form name="add-team">
+    <md-content layout-padding layout-sm="column" layout="row">
+      <md-input-container>
+        <label>Team Name</label>
+        <input name="teamName" ng-model="formData.name" required type="text">
+      </md-input-container>
+    </md-content>
+    <div layout="row" ng-show="formData.name.length >= 1">
+        <md-input-container>
+        <label>Employee Name</label>
+          <input class="form-control" name="teamEmployee" ng-model="employee.name" type="text">
+      </md-input-container>
+            <md-button class="md-raised md-primary" ng-click="addEmployee(formData)" type="submit">Add</md-button>
+        </div>
+<!-- /input-group -->
+        <div style="margin-top:10px;">
+          <div class="alert alert-success" ng-show="formData.employees != 0">Successfully Added:
+            <span>{{formData.employees[formData.employees.length - 1].name}}
+            </span>
+          </div>
+        </div>
+        <div class="panel panel-default" ng-show="formData.employees.length != 0">
+          <div class="panel-heading">Employees</div>
+          <div class="panel-body">You can edit your employees after you save the team</div>
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="employee in formData.employees">{{employee.name}}</li>
+          </ul>
+        </div>
+<!-- End .panel-->
+      </div>
+<!-- /.col-lg-6 -->
+    </div>
+<!--End .row-->
+
+<!-- creatTeam() WILL CREATE NEW team -->
+    <md-content layout="row">
+      <md-input-container>
+        <md-button class="md-raised md-primary" ng-click="teamCtrl.createTeam(); teamCtrl.resetForms()" ng-hide="employee.name.length > 0">Add Team</md-button>
+      </md-input-container>
+    </md-content>
+  </form>
+
+</md-bottom-sheet>

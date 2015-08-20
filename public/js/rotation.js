@@ -3,7 +3,7 @@
 
 var app = angular.module("rotationApp", ["teamApp"]);
 
-app.controller("RotationController", ["$scope", "$http", function ($scope, $http) {
+app.controller("RotationController", ["$scope", "$http", "$mdSidenav", function ($scope, $http, $mdSidenav) {
       var d = new Date();
       $scope.dayOfWeek = d.getDay();
 
@@ -15,6 +15,11 @@ app.controller("RotationController", ["$scope", "$http", function ($scope, $http
           .error(function(data) {
               console.log('Error: ' + data);
           });
+
+     $scope.toggleSidenav = function(menuId) {
+       $mdSidenav(menuId).toggle();
+       console.log("Executed");
+     };
 
       $scope.getRotation = function(id){
         $http.get("/api/rotations/" + id)
@@ -28,9 +33,11 @@ app.controller("RotationController", ["$scope", "$http", function ($scope, $http
 
       };
 
+
       $scope.createRotation = function() {
           $http.post("/api/rotations", $scope.rotationData)
               .success(function(data) {
+                  $scope.rotationData = {};
                   $scope.rotations = data;
                   console.log(data);
               })
@@ -94,6 +101,26 @@ app.controller("RotationController", ["$scope", "$http", function ($scope, $http
             $scope.rotationData.day_schedule.push($scope.teamData[i]._id);
           }
         }
+
+      $scope.getTeams();
+}]);
+
+app.controller("ActiveRotation",["$scope", "$http", function($scope, $http){
+
+  $scope.getRotationByStatus = function(status){
+    $http.get("/api/rotations/status/" + status)
+        .success(function(data) {
+            $scope.singleRotation = data;
+            console.log('Success: ' + data);
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        });
+
+  };
+
+  $scope.getRotationByStatus('Active');
+
 }]);
 
 app.directive("rotations", function(){
@@ -104,7 +131,6 @@ app.directive("rotations", function(){
             $scope.rotationForm = false;
             $scope.rotationData = {};
             $scope.rotationData.day_schedule = [];
-            $scope.getTeams();
 
 
             this.resetForms = function(){
