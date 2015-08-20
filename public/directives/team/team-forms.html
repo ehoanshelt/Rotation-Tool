@@ -1,13 +1,12 @@
-<div class="teamForms" layout="column"> <!--ng-click="teamFormCtrl.setTeamForm('add')"-->
+<div class="teamForms" layout="column">
   <div id="team-list" class="row" flex>
-
               <md-list>
                 <md-subheader class="md-no-sticky">Teams</md-subheader>
                 <!-- LOOP OVER THE team IN $scope.teams -->
                 <md-list-item ng-repeat="team in teams">
                         <p>{{ team.name }}</p>
-                        <button class="btn btn-danger btn-xs pull-right" ng-click="deleteTeam(team._id)"><span class="glyphicon glyphicon-remove" style="font-size:10px;" aria-hidden="true"></span></button>
-                        <a class="btn btn-success btn-xs pull-right" ng-click="getTeam(team._id); teamFormCtrl.setTeamForm('edit')" style="margin-right:5px;"><span class="glyphicon glyphicon-edit" style="font-size:10px;" aria-hidden="true"></span></a>
+                        <md-button ng-click="teamCtrl.deleteTeam(team._id)">Delete</md-button>
+                        <md-button ng-click="teamCtrl.getTeam(team._id); teamFormCtrl.setTeamForm('edit')" style="margin-right:5px;">Edit</md-button>
                 </md-list-item>
              </md-list>
           </div>
@@ -16,7 +15,7 @@
 
   <team-edit-form></team-edit-form>
 
-    <md-button class="md-fab" style="position:absolute; right:0; bottom:0" aria-label="Add Team" ng-click="showListBottomSheet($event)">
+    <md-button class="md-fab" style="position:absolute; right:0; bottom:0" aria-label="Add Team" ng-click="teamCtrl.showAddTeam($event)">
               <span style="font-size:3em; line-height:1.2em">+</span>
     </md-button>
 

@@ -3,13 +3,14 @@
 
   var app = angular.module("teamApp", ["ngMaterial"]);
 
-  app.controller("TeamController", ["$scope", "$http", "$mdSidenav", function($scope, $http, $mdSidenav) {
+  app.controller("TeamController", ["$scope", "$http", "$mdSidenav", "$mdBottomSheet", function($scope, $http, $mdSidenav, $mdBottomSheet) {
+    $scope.formData = {};
+    $scope.formData.employees = [];
 
     // when landing on the page, get all todos and show them
     $http.get("/api/teams")
       .success(function(data) {
         $scope.teams = data;
-        console.log(data);
       })
       .error(function(data) {
         console.log('Error: ' + data);
@@ -17,6 +18,14 @@
 
     $scope.toggleSidenav = function(menuId) {
       $mdSidenav(menuId).toggle();
+    };
+
+    this.showAddTeam = function($event) {
+      $mdBottomSheet.show({
+        templateUrl: 'directives/team/team-add.html',
+        targetEvent: $event,
+        controller: "TeamController"
+      });
     };
 
     this.resetForms = function() {
@@ -28,19 +37,6 @@
       $http.get("/api/teams/" + id)
         .success(function(data) {
           $scope.singleTeam = data;
-          console.log('Success: ' + data);
-        })
-        .error(function(data) {
-          console.log('Error: ' + data);
-        });
-
-    };
-
-    this.updateTeam = function(id) {
-      $http.put("/api/teams/" + id, $scope.singleTeam[0])
-        .success(function(data) {
-          $scope.singleTeam = {};
-          $scope.teams = data;
           console.log('Success: ' + data);
         })
         .error(function(data) {
@@ -61,6 +57,19 @@
         .error(function(data) {
           console.log('Error: ' + data);
         });
+    };
+
+    this.updateTeam = function(id) {
+      $http.put("/api/teams/" + id, $scope.singleTeam[0])
+        .success(function(data) {
+          $scope.singleTeam = {};
+          $scope.teams = data;
+          console.log('Success: ' + data);
+        })
+        .error(function(data) {
+          console.log('Error: ' + data);
+        });
+
     };
 
     // delete a todo after checking it
@@ -87,7 +96,7 @@
 
   }]);
 
-  app.directive("teamForms", ["$mdBottomSheet", function($mdBottomSheet) {
+  app.directive("teamForms", function() {
     return {
       restrict: "E",
       templateUrl: "directives/team/team-forms.html",
@@ -95,16 +104,6 @@
         $scope.employee = {};
         $scope.teamForm = false;
         $scope.employeeForm = false;
-        $scope.formData = {};
-        $scope.formData.employees = [];
-
-        $scope.showListBottomSheet = function($event) {
-
-          $mdBottomSheet.show({
-            templateUrl: 'directives/team/team-add.html',
-            targetEvent: $event
-          });
-        };
 
         this.showTeamForm = function(value) {
           return $scope.teamForm == value;
@@ -133,19 +132,12 @@
       }],
       controllerAs: "teamFormCtrl"
     };
-  }]);
+  });
 
   app.directive("teamEditForm", function() {
     return {
       restrict: "E",
       templateUrl: "directives/team/team-edit.html"
-    };
-  });
-
-  app.directive("teamAddForm", function() {
-    return {
-      restrict: "E",
-      templateUrl: "directives/team/team-add.html"
     };
   });
 }());

@@ -2,7 +2,7 @@
 <!doctype html>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="rotationApp">
+<html ng-app="teamApp">
   <head>
 <!-- META -->
     <meta charset="utf-8">
@@ -41,22 +41,20 @@
             <h2>Navigation</h2>
           </div>
         </md-toolbar>
-        <md-menu>
-          <md-menu-content>
-            <md-menu-item>
+        <md-list>
+            <md-list-item>
               <md-button>Home</md-button>
-            </md-menu-item>
+            </md-list-item>
             <md-divider></md-divider>
-            <md-menu-item>
+            <md-list-item >
               <md-button>Rotation</md-button>
-            </md-menu-item>
+            </md-list-item>
             <md-divider></md-divider>
-            <md-menu-item>
+            <md-list-item>
               <md-button>Teams</md-button>
-            </md-menu-item>
+            </md-list-item>
             <md-divider></md-divider>
-          </md-menu-content>
-        </md-menu>
+        </md-list>
       </md-sidenav>
       <div flex id="content" layout="column">
         <md-content class="md-padding" flex layout="column">
@@ -64,13 +62,11 @@
         </md-content>
       </div>
     </div>
-
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
 <!-- load angular -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.1/angular-material.min.js"></script>
-    <script src="js/rotation.js"></script>
     <script src="js/team.js"></script>
   </body>
 </html>
