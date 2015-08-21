@@ -1,6 +1,5 @@
 <!-- FORM TO CREATE team -->
 <md-bottom-sheet>
-  {{formData}}
   <md-toolbar layout="row">
     <div class="md-toolbar-tools">
       <h2>Add Team</h2>
@@ -13,6 +12,7 @@
         <input name="teamName" ng-model="formData.name" required type="text">
       </md-input-container>
     </md-content>
+
     <div layout="row" ng-show="formData.name.length >= 1">
       <md-input-container>
         <label>Employee Name</label>
@@ -20,30 +20,11 @@
       </md-input-container>
       <md-button class="md-raised md-primary" ng-click="addEmployee(formData)" type="submit">Add</md-button>
     </div>
-<!-- /input-group -->
-    <div style="margin-top:10px;">
-      <div class="alert alert-success" ng-show="formData.employees != 0">Successfully Added:
-        <span>{{formData.employees[formData.employees.length - 1].name}}
-        </span>
-      </div>
-    </div>
-    <div class="panel panel-default" ng-show="formData.employees.length != 0">
-      <div class="panel-heading">Employees</div>
-      <div class="panel-body">You can edit your employees after you save the team</div>
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat="employee in formData.employees">{{employee.name}}</li>
-      </ul>
-    </div>
-<!-- End .panel-->
-  </div>
-<!-- /.col-lg-6 -->
-</div>
-<!--End .row-->
-<md-content layout="row">
-  <md-input-container>
-    <md-button class="md-raised md-primary" ng-click="createTeam()" ng-hide="employee.name.length > 0">Add Team</md-button>
-  </md-input-container>
-</md-content>
-</form>
 
+    <md-content layout="row">
+      <md-input-container>
+        <md-button class="md-raised md-primary" ng-click="createTeam()" ng-hide="employee.name.length > 0">Add Team</md-button>
+      </md-input-container>
+    </md-content>
+  </form>
 </md-bottom-sheet>

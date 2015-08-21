@@ -11,9 +11,6 @@
 
     <title>Team Builder</title>
 
-<!-- SPELLS -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<!-- load jquery -->
 
 <!-- SCROLLS -->
 <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">-->
@@ -25,7 +22,6 @@
   </head>
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
   <body layout-fill layout-margin layout-padding layout="column" ng-controller="TeamController as teamCtrl">
-
     <md-toolbar layout="row">
       <div class="md-toolbar-tools">
         <md-button class="md-icon-button" hide-gt-sm ng-click="toggleSidenav('left')">
@@ -58,7 +54,28 @@
       </md-sidenav>
       <div flex id="content" layout="column">
         <md-content class="md-padding" flex layout="column">
-          <team-forms></team-forms>
+          <div class="teamForms" layout="column">
+            <div id="team-list" class="row" flex>
+                        <md-list>
+                          <md-subheader class="md-no-sticky">Teams</md-subheader>
+                          <!-- LOOP OVER THE team IN $scope.teams -->
+                          <md-list-item ng-repeat="team in teams">
+                                  <p>{{ team.name }}</p>
+                                  <md-button ng-click="deleteTeam(team._id)">Delete</md-button>
+                                  <md-button ng-click="teamCtrl.getTeam(team._id)" style="margin-right:5px;">Edit</md-button>
+                          </md-list-item>
+                       </md-list>
+            </div>
+
+
+
+              <md-button class="md-fab" style="position:absolute; right:0; bottom:0" aria-label="Add Team" ng-click="teamCtrl.showAddTeam($event)">
+                        <span style="font-size:3em; line-height:1.2em">+</span>
+              </md-button>
+
+            <team-edit-form></team-edit-form>
+
+          </div>
         </md-content>
       </div>
     </div>
