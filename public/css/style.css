@@ -1,1 +1,35 @@
 /* Custome Styling just in case! */
+html{
+  font-family: 'Open Sans', sans-serif !important;
+}
+md-toolbar {
+    background-color: #40bac8 !important;
+}
+
+md-content{
+  color:#162a33;
+}
+
+a.md-button.md-fab, .md-button.md-fab {
+    background-color: #eb6126 !important;
+}
+
+a.md-button.md-warn, .md-button.md-warn{
+  color:#ce2323;
+}
+
+a.md-button.md-primary, .md-button.md-primary{
+  color:#35657a;
+}
+
+a.md-button.md-primary.md-raised,.md-button.md-primary.md-raised{
+  background-color: #40bac8 !important;
+}
+
+md-input-container:not(.md-input-invalid).md-input-focused label{
+  color:#35657a;
+}
+
+.align-left{
+  text-align:left !important;
+}

@@ -3,7 +3,7 @@
 
 var app = angular.module("rotationApp", ["teamApp"]);
 
-app.controller("RotationController", ["$scope", "$http", function ($scope, $http) {
+app.controller("RotationController", ["$scope", "$http", "$mdSidenav", "$mdBottomSheet", function ($scope, $http, $mdSidenav, $mdBottomSheet) {
       var d = new Date();
       $scope.dayOfWeek = d.getDay();
 
@@ -16,10 +16,36 @@ app.controller("RotationController", ["$scope", "$http", function ($scope, $http
               console.log('Error: ' + data);
           });
 
+     $scope.toggleSidenav = function(menuId) {
+       $mdSidenav(menuId).toggle();
+       console.log("Executed");
+     };
+
+     this.showAddRotation = function($event) {
+       $mdBottomSheet.show({
+         templateUrl: 'directives/rotations/rotation-add.html',
+         targetEvent: $event,
+         scope: $scope,
+         preserveScope: true
+       })
+     };
+
+     this.showEditRotation = function($event) {
+       $mdBottomSheet.show({
+         templateUrl: 'directives/rotations/rotation-edit.html',
+         targetEvent: $event,
+         scope: $scope,
+         preserveScope: true
+       })
+     };
+
       $scope.getRotation = function(id){
         $http.get("/api/rotations/" + id)
             .success(function(data) {
                 $scope.singleRotation = data;
+                //convert mongo string date to Javascript date
+                $scope.start_date = new Date($scope.singleRotation[0].start_date);
+                $scope.end_date = new Date($scope.singleRotation[0].end_date);
                 console.log('Success: ' + data);
             })
             .error(function(data) {
@@ -28,9 +54,12 @@ app.controller("RotationController", ["$scope", "$http", function ($scope, $http
 
       };
 
+
       $scope.createRotation = function() {
           $http.post("/api/rotations", $scope.rotationData)
               .success(function(data) {
+                  $mdBottomSheet.hide();
+                  $scope.rotationData = {};
                   $scope.rotations = data;
                   console.log(data);
               })
@@ -40,8 +69,11 @@ app.controller("RotationController", ["$scope", "$http", function ($scope, $http
       };
 
       $scope.updateRotation = function(id) {
+          $scope.singleRotation[0].start_date = $scope.start_date;
+          $scope.singleRotation[0].end_date = $scope.end_date;
           $http.put("/api/rotations/" + id, $scope.singleRotation[0])
               .success(function(data) {
+                $mdBottomSheet.hide();
                   $scope.singleRotation = {};
                   $scope.rotations = data;
                   console.log(data);
@@ -94,6 +126,26 @@ app.controller("RotationController", ["$scope", "$http", function ($scope, $http
             $scope.rotationData.day_schedule.push($scope.teamData[i]._id);
           }
         }
+
+      $scope.getTeams();
+}]);
+
+app.controller("ActiveRotation",["$scope", "$http", function($scope, $http){
+
+  $scope.getRotationByStatus = function(status){
+    $http.get("/api/rotations/status/" + status)
+        .success(function(data) {
+            $scope.singleRotation = data;
+            console.log('Success: ' + data);
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        });
+
+  };
+
+  $scope.getRotationByStatus('Active');
+
 }]);
 
 app.directive("rotations", function(){
@@ -104,7 +156,6 @@ app.directive("rotations", function(){
             $scope.rotationForm = false;
             $scope.rotationData = {};
             $scope.rotationData.day_schedule = [];
-            $scope.getTeams();
 
 
             this.resetForms = function(){

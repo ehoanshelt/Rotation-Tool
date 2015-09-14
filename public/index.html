@@ -1,0 +1,75 @@
+<!-- index.html -->
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="rotationApp">
+  <head>
+<!-- META -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+<!-- Optimize mobile viewport -->
+
+    <title>Current Rotation</title>
+
+    <link href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body layout-fill layout-margin layout-padding layout="column" ng-controller="RotationController as rotationCtrl">
+  <md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" ng-click="toggleSidenav('left')">
+        <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
+      </md-button>
+      <h2>{{teamData[dayOfWeek - 1].name}}</h2>
+    </div>
+  </md-toolbar>
+  <div layout="row">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left">
+      <md-toolbar layout="row">
+        <div class="md-toolbar-tools">
+          <h2>Navigation</h2>
+        </div>
+      </md-toolbar>
+      <md-list>
+        <md-list-item>
+          <md-button class="align-left"><a href="index.html">Home</a></md-button>
+        </md-list-item>
+        <md-divider></md-divider>
+        <md-list-item>
+          <md-button class="align-left"><a href="rotation.html">Rotation</a></md-button>
+        </md-list-item>
+        <md-divider></md-divider>
+        <md-list-item>
+          <md-button class="align-left"><a href="team.html">Teams</a></md-button>
+        </md-list-item>
+        <md-divider></md-divider>
+      </md-list>
+    </md-sidenav>
+
+    <md-content class="md-padding" flex layout="column" ng-controller="ActiveRotation as activeCtrl">
+      <h2 class="md-title">Team Needs</h2>
+      <md-divider></md-divider>
+      <p>{{singleRotation[0].day_schedule[dayOfWeek - 1].need}}</p>
+
+      <h2 class="md-title">Team Members</h2>
+      <md-divider></md-divider>
+      <md-list>
+        <md-list-item class="md-3-line" ng-repeat="employee in teamData[dayOfWeek - 1].employees">{{employee.name}}</md-list-item>
+      </md-list>
+
+      <h2 class="md-title">Notes for the Day</h2>
+      <md-divider></md-divider>
+      <textarea class="form-control" ng-model="singleRotation[0].notes[dayOfWeek - 1].content" rows="10"></textarea>
+      <md-button class="md-raised md-primary">Save</md-button>
+    </md-content>
+
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.1/angular-material.min.js"></script>
+      <script src="js/rotation.js"></script>
+      <script src="js/team.js"></script>
+    </body>
+  </html>
