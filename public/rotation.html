@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!doctype html>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
@@ -10,29 +9,74 @@
 <!-- Optimize mobile viewport -->
 
     <title>Rotation Builder</title>
-
-<!-- SPELLS -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<!-- load jquery -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-<!-- load angular -->
-    <script src="js/rotation.js"></script>
-    <script src="js/team.js"></script>
-
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-<!-- load bootstrap -->
+    <link href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <link href="css/style.css" rel="stylesheet">
   </head>
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
-  <body ng-controller="RotationController as rotationCtrl">
-    <div class="container">
-
-<!-- HEADER AND TODO COUNT -->
-      <div class="jumbotron text-center">
-        <h1>Rotation Builder</h1>
+  <body layout-fill layout-margin layout-padding layout="column" ng-controller="RotationController as rotationCtrl">
+    <md-toolbar layout="row">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="toggleSidenav('left')">
+          <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
+        </md-button>
+        <h2>Rotation Builder</h2>
       </div>
+    </md-toolbar>
+    <div layout="row">
+      <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left">
+        <md-toolbar layout="row">
+          <div class="md-toolbar-tools">
+            <h2>Navigation</h2>
+          </div>
+        </md-toolbar>
+        <md-list>
+          <md-list-item>
+            <md-button class="align-left">Home</md-button>
+          </md-list-item>
+          <md-divider></md-divider>
+          <md-list-item>
+            <md-button class="align-left">Rotation</md-button>
+          </md-list-item>
+          <md-divider></md-divider>
+          <md-list-item>
+            <md-button class="align-left">Teams</md-button>
+          </md-list-item>
+          <md-divider></md-divider>
+        </md-list>
+      </md-sidenav>
 
-      <rotations></rotations>
+      <md-content class="md-padding" flex layout="column">
+              <h2 class="md-title">Rotations</h2>
+              <md-divider></md-divider>
+<!-- LOOP OVER THE team IN $scope.teams -->
+              <md-list>
+              <md-list-item layout="row" ng-repeat="rotation in rotations">
+                <p>{{ rotation.support_agent }}</br>
+                <span style="font-size:.6em; color:#848080">{{ rotation.start_date | date : "shortDate"}} - {{ rotation.end_date | date : "shortDate"}}</span></p>
+                          <md-button class="md-button md-primary" ng-click="getRotation(rotation._id); rotationCtrl.showEditRotation($event)">
+                              Edit
+                          </md-button>
 
+                          <md-button class="md-button md-warn" ng-click="deleteRotation(rotation._id)">
+                               Delete
+                          </md-button>
+
+              </md-list-item>
+            </md-list>
+
+      </md-content>
+    </div>
+    <md-button aria-label="Add Team" class="md-fab" ng-click="rotationCtrl.showAddRotation($event)" style="position:absolute; right:0; bottom:0">
+      <span style="font-size:3.2em; line-height:1.2em">+</span>
+    </md-button>
+
+
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.1/angular-material.min.js"></script>
+      <script src="js/rotation.js"></script>
+      <script src="js/team.js"></script>
     </body>
   </html>

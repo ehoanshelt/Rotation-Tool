@@ -5,23 +5,24 @@
       <h2>Add Team</h2>
     </div>
   </md-toolbar>
-  <form name="add-team">
+  <form name="add-team" novalidate>
     <md-content layout-padding layout-sm="column" layout="row">
       <md-input-container>
         <label>Team Name</label>
         <input name="teamName" ng-model="formData.name" required type="text">
       </md-input-container>
     </md-content>
-
     <div layout="row" ng-show="formData.name.length >= 1">
       <md-input-container>
         <label>Employee Name</label>
         <input class="form-control" name="teamEmployee" ng-model="employee.name" type="text">
       </md-input-container>
-      <md-button class="md-raised md-primary" ng-click="addEmployee(formData)" type="submit">Add</md-button>
     </div>
 
     <md-content layout="row">
+      <md-input-container ng-show="employee.name.length > 0">
+        <md-button class="md-raised md-primary" ng-click="addEmployee(formData)" type="submit">Add Employee</md-button>
+      </md-input-container>
       <md-input-container>
         <md-button class="md-raised md-primary" ng-click="createTeam()" ng-hide="employee.name.length > 0">Add Team</md-button>
       </md-input-container>

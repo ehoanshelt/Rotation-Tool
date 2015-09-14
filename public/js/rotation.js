@@ -3,7 +3,7 @@
 
 var app = angular.module("rotationApp", ["teamApp"]);
 
-app.controller("RotationController", ["$scope", "$http", "$mdSidenav", function ($scope, $http, $mdSidenav) {
+app.controller("RotationController", ["$scope", "$http", "$mdSidenav", "$mdBottomSheet", function ($scope, $http, $mdSidenav, $mdBottomSheet) {
       var d = new Date();
       $scope.dayOfWeek = d.getDay();
 
@@ -21,10 +21,31 @@ app.controller("RotationController", ["$scope", "$http", "$mdSidenav", function 
        console.log("Executed");
      };
 
+     this.showAddRotation = function($event) {
+       $mdBottomSheet.show({
+         templateUrl: 'directives/rotations/rotation-add.html',
+         targetEvent: $event,
+         scope: $scope,
+         preserveScope: true
+       })
+     };
+
+     this.showEditRotation = function($event) {
+       $mdBottomSheet.show({
+         templateUrl: 'directives/rotations/rotation-edit.html',
+         targetEvent: $event,
+         scope: $scope,
+         preserveScope: true
+       })
+     };
+
       $scope.getRotation = function(id){
         $http.get("/api/rotations/" + id)
             .success(function(data) {
                 $scope.singleRotation = data;
+                //convert mongo string date to Javascript date
+                $scope.start_date = new Date($scope.singleRotation[0].start_date);
+                $scope.end_date = new Date($scope.singleRotation[0].end_date);
                 console.log('Success: ' + data);
             })
             .error(function(data) {
@@ -37,6 +58,7 @@ app.controller("RotationController", ["$scope", "$http", "$mdSidenav", function 
       $scope.createRotation = function() {
           $http.post("/api/rotations", $scope.rotationData)
               .success(function(data) {
+                  $mdBottomSheet.hide();
                   $scope.rotationData = {};
                   $scope.rotations = data;
                   console.log(data);
@@ -47,8 +69,11 @@ app.controller("RotationController", ["$scope", "$http", "$mdSidenav", function 
       };
 
       $scope.updateRotation = function(id) {
+          $scope.singleRotation[0].start_date = $scope.start_date;
+          $scope.singleRotation[0].end_date = $scope.end_date;
           $http.put("/api/rotations/" + id, $scope.singleRotation[0])
               .success(function(data) {
+                $mdBottomSheet.hide();
                   $scope.singleRotation = {};
                   $scope.rotations = data;
                   console.log(data);

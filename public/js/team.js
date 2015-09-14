@@ -4,7 +4,9 @@
     var app = angular.module("teamApp", ["ngMaterial"]);
 
     app.controller("TeamController", ["$scope", "$http", "$mdSidenav", "$mdBottomSheet", function($scope, $http, $mdSidenav, $mdBottomSheet) {
+      $scope.employee = {};
       $scope.formData = {};
+      $scope.formShow = false;
       $scope.formData.employees = [];
 
       // when landing on the page, get all todos and show them
@@ -20,6 +22,7 @@
         $mdSidenav(menuId).toggle();
       };
 
+
       this.showAddTeam = function($event) {
         $mdBottomSheet.show({
           templateUrl: 'directives/team/team-add.html',
@@ -28,6 +31,23 @@
           preserveScope: true
         })
       };
+
+      this.showEditTeam = function($event) {
+        $mdBottomSheet.show({
+          templateUrl: 'directives/team/team-edit.html',
+          targetEvent: $event,
+          scope: $scope,
+          preserveScope: true
+        })
+      };
+
+      this.setForm = function(id){
+        $scope.formShow = id;
+      }
+
+      this.showForm = function(id){
+        return $scope.formShow == id;
+      }
 
       this.resetForms = function() {
         $scope.teamForm = false;
@@ -50,6 +70,7 @@
       $scope.createTeam = function() {
         $http.post("/api/teams", $scope.formData)
           .success(function(data) {
+            $mdBottomSheet.hide();
             $scope.formData = {}; // clear the form so our user is ready to enter another
             $scope.formData.employees = [];
             $scope.teams = data;
@@ -63,6 +84,7 @@
       $scope.updateTeam = function(id) {
         $http.put("/api/teams/" + id, $scope.singleTeam[0])
           .success(function(data) {
+            $mdBottomSheet.hide();
             $scope.singleTeam = {};
             $scope.teams = data;
             console.log('Success: ' + data);
@@ -85,6 +107,15 @@
           });
       };
 
+      $scope.addEmployee = function(dataSet) {
+        dataSet.employees.push($scope.employee);
+        $scope.employee = {};
+      };
+
+      $scope.removeEmployee = function(dataSet, index) {
+        dataSet.employees.splice(index, 1);
+      };
+
 
       $scope.getRotation = function() {
         $http.post("/api/rotations")
@@ -97,45 +128,6 @@
       };
 
     }]);
-
-
-    app.directive("teamForms", function() {
-      return {
-        restrict: "E",
-        templateUrl: "directives/team/team-forms.html",
-        controller: ["$scope", function($scope) {
-          $scope.employee = {};
-          $scope.teamForm = false;
-          $scope.employeeForm = false;
-
-          this.showTeamForm = function(value) {
-            return $scope.teamForm == value;
-          };
-
-          this.setTeamForm = function(value) {
-            $scope.teamForm = value;
-          };
-
-          this.showEmployeeForm = function(value) {
-            return $scope.employeeForm == value;
-          };
-
-          this.setEmployeeForm = function(value) {
-            $scope.employeeForm = value;
-          };
-
-          $scope.addEmployee = function(dataSet) {
-            dataSet.employees.push($scope.employee);
-            $scope.employee = {};
-          };
-
-          $scope.removeEmployee = function(dataSet, index) {
-            dataSet.employees.splice(index, 1);
-          };
-        }],
-        controllerAs: "teamFormCtrl"
-      };
-    });
 
     app.directive("teamEditForm", function() {
       return {

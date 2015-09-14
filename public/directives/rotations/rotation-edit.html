@@ -1,38 +1,50 @@
-<div class"add-rotation" ng-show="rotationFormCtrl.showRotationForm('edit-rotation')">
-  <div class="panel panel-default">
-    <div class="panel-heading">Edit Rotation</div>
-    <div class="panel-body">
-        <form>
-          <div class="form-group">
-            <input type="text" class="form-control" id="supportName" placeholder="Name of Support Rep..." ng-model="singleRotation[0].support_agent" required>
-          </div>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-4">
-                 <input type="date" class="form-control" id="startDate" placeholder="Start Date" ng-model="singleRotation[0].start_date" placeholder="Start Date" required>
-              </div>
-
-              <div class="col-sm-4">
-                 <input type="date" class="form-control" id="endDate" placeholder="End Date" ng-model="singleRotation[0].end_date" placeholder="End Date" required>
-              </div>
-              <div class="col-sm-4">
-                 <select class="form-control" ng-model="singleRotation[0].status" required>
-                    <option value="Not Started">Not Started</option>
-                    <option value="Active">Active</option>
-                    <option value="Completed">Completed</option>
-                 </select>
-              </div>
-            </div>
-            <div class="form-group" ng-repeat="team in teamData">
-              <label>{{team.name}} Needs</label>
-              <textarea type="text" class="form-control" id="Q-TeamNeed" ng-model="singleRotation[0].day_schedule[$index].need" required></textarea>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-danger pull-right" style="margin-left:5px;" ng-click="rotationFormCtrl.resetForms()">Close</button><!--; createRotation(); rotationFormCtrl.resetForms()-->
-          <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="updateRotation(singleRotation[0]._id); rotationFormCtrl.setRotationForm('view-all-rotation')" ng-hide="employee.name.length > 0">Save</button>
-
-        </form>
+<md-bottom-sheet>
+  <md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+      <h2>Edit Rotation</h2>
     </div>
-    </div>
-  </div>
-</div>
+  </md-toolbar>
+  <form name="edit-rotation" novalidate>
+    <form name="edit-team" novalidate>
+
+      <md-content layout-padding layout="row">
+        <md-input-container flex>
+          <label>Technician Name</label>
+          <input id="supportName" ng-model="singleRotation[0].support_agent" required type="text">
+        </md-input-container>
+
+        <md-input-container flex>
+          <label>Status</label>
+          <md-select ng-model="singleRotation[0].status" required>
+            <md-option value="Not Started">Not Started</md-option>
+            <md-option value="Active">Active</md-option>
+            <md-option value="Completed">Completed</md-option>
+          </md-select>
+        </md-input-container>
+      </md-content>
+      <md-content layout-padding layout="row">
+        <md-input-container flex>
+          <label>Start Date</label>
+          <input type="date" class="form-control" id="startDate" ng-model="start_date" placeholder="Start Date" placeholder="Start Date" required >
+        </md-input-container>
+        <md-input-container flex>
+          <label>End Date</label>
+          <input type="date" class="form-control" id="endDate" ng-model="end_date" placeholder="End Date" placeholder="End Date" required>
+        </md-input-container>
+      </md-content>
+
+      <md-tabs md-border-bottom md-dynamic-height>
+        <md-tab label="{{team.name}}" ng-repeat="team in teamData">
+          <md-content class="md-padding">
+            <md-input-container >
+              <label>{{team.name}}
+                Needs</label>
+              <textarea columns="1" md-maxlength="150" md-no-autogrow="false" ng-model="singleRotation[0].day_schedule[$index].need" row="1" style="font-size:.8em"></textarea>
+            </md-input-container>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+      <md-content>
+        <md-button class="md-raised md-primary" ng-click="updateRotation(singleRotation[0]._id)">Save</button>
+      </md-content </form>
+    </md-bottom-sheet>
